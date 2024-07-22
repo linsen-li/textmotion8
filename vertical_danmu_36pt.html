@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vertical Rolling Danmaku Example</title>
+<style>
+    .danmaku-container {
+        position: relative;
+        width: 100%;
+        height: 1200px;
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #fff; /* White background */
+    }
+
+    .danmaku {
+        position: absolute;
+        white-space: nowrap;
+        font-size: 36px;
+        color: #000; /* Black text */
+        background-color: rgba(255, 255, 255, 0.7); /* Optional: slight white background to the text */
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+</style>
+</head>
+<body>
+    <div class="danmaku-container" id="danmaku-container"></div>
+
+    <script>
+        const comments = [
+            'This video is absolutely amazing! The quality and content are top-notch!',
+            'I can\'t stop laughing! This is the funniest thing I\'ve seen all week!',
+            'I\'m really disappointed with the content. I expected much more.',
+            'This is so inspiring. I feel motivated to try this out myself!',
+            'I feel disrespected by the way certain topics were handled in this video.',
+            'This is infuriating! How can you spread such harmful misinformation?',
+            'The production value is great, but the message is completely off. I\'m quite upset.',
+            'This is misleading and factually incorrect. Please do better research next time.',
+            'This is infuriating! How can you spread such harmful misinformation?'
+        ];
+
+        // Danmaku class definition
+        class Danmaku {
+            constructor(speed, left) {
+                this.speed = speed;
+                this.left = left;
+                this.element = document.createElement('div');
+                this.element.className = 'danmaku';
+                this.updateText();
+                this.element.style.left = left + 'px';
+            }
+
+            updateText() {
+                const randomIndex = Math.floor(Math.random() * comments.length);
+                this.element.textContent = `${this.speed} px/s: ${comments[randomIndex]}`;
+            }
+
+            move(containerHeight) {
+                let container = document.getElementById('danmaku-container');
+                container.appendChild(this.element);
+                let position = containerHeight;
+                let interval = 10; // Interval in milliseconds
+                let speedPerInterval = (this.speed / 1000) * interval; // Speed in pixels per interval
+
+                let id = setInterval(() => {
+                    position -= speedPerInterval;
+                    this.element.style.top = position + 'px';
+                    if (position + this.element.offsetHeight <= 0) {
+                        position = containerHeight; // Reset to the bottom
+                        this.updateText(); // Update text with a random comment
+                    }
+                }, interval);
+            }
+        }
+
+        // Create danmaku instance
+        function createDanmaku(speed) {
+            let container = document.getElementById('danmaku-container');
+            let left =  Math.floor(Math.random() * (container.offsetWidth - 150))/2; // Start from the left half of the screen
+            let danmaku = new Danmaku(speed, left);
+            danmaku.move(container.offsetHeight);
+        }
+
+        // Example danmaku messages
+	createDanmaku(250); // Speed mapped to 100 px/s
+        createDanmaku(300); // Example speed
+	createDanmaku(350); // Speed mapped to 100 px/s
+        createDanmaku(400); // Example speed
+        createDanmaku(450); // Example speed
+        createDanmaku(500); // Example speed
+	createDanmaku(550); // Speed mapped to 100 px/s
+	createDanmaku(600); // Speed mapped to 100 px/s
+	createDanmaku(650); // Speed mapped to 100 px/s
+	createDanmaku(700); // Speed mapped to 100 px/s
+	createDanmaku(750); // Speed mapped to 100 px/s
+	createDanmaku(800); // Speed mapped to 100 px/s
+	createDanmaku(850); // Speed mapped to 100 px/s
+	createDanmaku(900); // Speed mapped to 100 px/s
+
+
+    </script>
+</body>
+</html>
